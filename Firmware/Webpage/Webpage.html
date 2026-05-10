@@ -2,15 +2,53 @@
 <html>
 
 <head>
+<style>
+body 	{background-color:#ef476f;
+	font-family:sans-serif;}
 
+
+
+h1   	{color:#ffd166;
+	text-align:center;
+	font-size:55px}
+
+h2 	{color:#06d6a0;
+	font-size:35px}
+
+p 	{color:red;}
+
+label	 {color:#118ab2;
+	font-size:25px}
+
+</style>
   <title>ESP32 Web Server</title>
 
 </head>
 <body>
 
   <h1>ESP32 Web Server</h1>
+<h2><b>Coordinate 1</h2>
 
-  <p>Hello World</p>
+  <form>
+
+<label for="C1_Alt"> Altitude </label>
+<input type="text" id="C1_Alt" placeholder="eg.47">
+
+<br><br>
+<label for="C1_Azi"> Azimuth </label>
+<input type="text" id="C1_Azi" placeholder="eg.27">
+
+<h2> <b>Coordinate 2</h2>
+  
+<label for="C2_Alt"> Altitude </label>
+<input type="text" id="C2_Alt" placeholder="eg.49">
+
+<br><br>
+<label for="C2_Azi"> Azimuth </label>
+<input type="text" id="C2_Azi" placeholder="eg.64">
+<br><br><br>
+<input type="submit" id="submit" >
+</form>
 
 </body>
 </html>
