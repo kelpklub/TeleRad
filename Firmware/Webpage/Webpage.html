@@ -1,53 +1,61 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-<style>
-body 	{background-color:darkgrey;
-	font-family:sans-serif;
-	text-align:center;}
-
-h1   	{color:#ffd166;
-	background-color:grey;
-	font-size:55px;}
-
-h2 	{color:#06d6a0;
-	background-color:grey;
-	font-size:35px}
-
-label	 {color:#118ab2;
-	font-size:25px;
-	text-align:center;}
-
-</style>
-  <title>ESP32 Web Server</title>
-
-</head>
-<body>
-
-  <h1>ESP32 Web Server</h1>
-<h2><b>Coordinate 1</h2>
-
-  <form>
-
-<label for="C1_Alt"> Altitude </label>
-<input type="text" id="C1_Alt" placeholder="eg.47">
-
-<br><br>
-<label for="C1_Azi"> Azimuth </label>
-<input type="text" id="C1_Azi" placeholder="eg.27" >
-
-<h2> <b>Coordinate 2</h2>
-  
-<label for="C2_Alt"> Altitude </label>
-<input type="text" id="C2_Alt" placeholder="eg.49">
-
-<br><br>
-<label for="C2_Azi"> Azimuth </label>
-<input type="text" id="C2_Azi" placeholder="eg.64">
-<br><br><br>
-<input type="submit" id="submit">
-</form>
-
-</body>
-</html>
+  <html>
+    <head>
+      <style>
+      body {
+        background-color:darkgrey;
+        font-family:sans-serif;
+        text-align:center;
+      }
+      h1 {
+        color:#ffd166;
+        background-color:grey;
+        font-size:55px;
+      }
+      h2 {
+        color:#06d6a0;
+        background-color:grey;
+        font-size:35px
+      }
+      label {
+        color:#118ab2;
+        font-size:25px;
+      }
+      button {
+        font-size:25px;
+      }
+      input {
+        font-size:20px;
+      }
+      </style>
+      <title>ESP32 Web Server</title>
+    </head>
+    <body>
+      <h1>ESP32 Web Server</h1>
+      <h2>coordinate 1</h2>
+      <label>Altitude</label>
+      <input type="text" id="C1_Alt">
+      <br><br>
+      <label>Azimuth</label>
+      <input type="text" id="C1_Azi">
+      <h2>coordinate 2</h2>
+      <label>Altitude</label>
+      <input type="text" id="C2_Alt">
+      <br><br>
+      <label>Azimuth</label>
+      <input type="text" id="C2_Azi">
+      <br><br><br>
+      <button onclick="sendData()">
+        Submit
+      </button>
+      <script>
+      function sendData() {
+        let C1_Alt =document.getElementById("C1_Alt").value;
+        let C1_Azi =document.getElementById("C1_Azi").value;
+        let C2_Alt =document.getElementById("C2_Alt").value;
+        let C2_Azi =document.getElementById("C2_Azi").value;
+        fetch(`/submit?C1_Alt=${C1_Alt}&C1_Azi=${C1_Azi}&C2_Alt=${C2_Alt}&C2_Azi=${C2_Azi}`);
+      }
+      </script>
+    </body>
+  </html>
