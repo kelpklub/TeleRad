@@ -28,6 +28,10 @@ constexpr long AZ_MAX_STEPS = 19200;
 constexpr long ALT_MIN_STEPS = 0;
 constexpr long ALT_MAX_STEPS = 9600;
 
+//parking pos
+constexpr long PARK_AZIMUTH_STEPS=0;
+constexpr long PARK_ALTITUDE_STEPS=0;
+
 // Timeouts (ms)
 
 constexpr unsigned long COMMAND_TIMEOUT = 3000;

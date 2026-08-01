@@ -89,3 +89,47 @@ float getAcceleration()
 {
     return currentAcceleration;
 }
+
+//movement
+void moveTo(long azimuthSteps, long altitudeSteps)
+{
+    if(!motorsEnabled)
+    {
+        enableDrivers();
+    }
+    targetPosition.azimuth=azimuthSteps;
+    targetPosition.altitude=altitudeSteps;
+
+    azMotor.moveTo(azimuthSteps);
+    altMotor.moveTo(altitudeSteps);
+    motionState=MotionState::MOVING;
+}
+
+void moveRelative(long azimuthOffset,long altitudeOffset)
+{
+    moveTo(targetPosition.azimuth+azimuthOffset,targetPosition.altitude+altitudeOffset);
+}
+
+void park()
+{
+    moveTo(PARK_AZIMUTH_STEPS,PARK_ALTITUDE_STEPS);
+    motionState=MotionState::PARKING;
+}
+
+void stopMotion()
+{
+    azMotor.stop();
+    altMotor.stop();
+    motionState=MotionState::STOPPED;
+}
+
+//motion state
+bool isBusy()
+{
+    return(azMotor.distanceToGo()!=0 || altMotor.distanceToGo()!=0);
+}
+
+MotionState getMotionState()
+{
+    return motionState;
+}
