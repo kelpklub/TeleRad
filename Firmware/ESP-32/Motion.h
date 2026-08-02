@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <AccelStepper.h>
-#include "Config.h"
+#include "config.h"
 #include "Pins.h"
 #include "Types.h"
 

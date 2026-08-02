@@ -13,6 +13,7 @@ AccelStepper altMotor(
     ALT_DIR_PIN
 );
 
+
 //state
 static Position currentPosition = {0, 0};
 static Position targetPosition={0,0};
@@ -107,7 +108,7 @@ void moveTo(long azimuthSteps, long altitudeSteps)
 
 void moveRelative(long azimuthOffset,long altitudeOffset)
 {
-    moveTo(targetPosition.azimuth+azimuthOffset,targetPosition.altitude+altitudeOffset);
+    moveTo(currentPosition.azimuth+azimuthOffset,currentPosition.altitude+altitudeOffset);
 }
 
 void park()
@@ -132,4 +133,77 @@ bool isBusy()
 MotionState getMotionState()
 {
     return motionState;
+}
+
+//Motion 
+void updateMotion()
+{
+    azMotor.run();
+    altMotor.run();
+
+    currentPosition.azimuth=azMotor.currentPosition();
+    currentPosition.altitude=altMotor.currentposition();
+
+    switch (motionState)
+    {
+        case MotionState::MOVING:
+        case MotionState::PARKING:
+            if (!isBusy())
+            {
+                motionState=MotionState::IDLE;
+            }
+            break;
+        case MotionState::STOPPED:
+            if (!isBusy())
+            {
+            motionState=MotionState::IDLE;
+            }
+            break;
+        case MotionState::IDLE:
+        case MotionState::HOMING:
+        case MotionState::ERROR:
+        break;
+    }
+}
+
+//position
+Position getCurrentPosition()
+{
+    return currentPosition;
+}
+
+Position gatTargetPosition()
+{
+    return targetPosition;
+}
+
+void setCurrentPosition(long azimuth,long altitude)
+{
+    azMotor.setCurrentPosition(azimuth);
+    altMotor.setCurrentPosition(altitude);
+    currentPosition.azimuth=azimuth;
+    currentPosition.altitude=altitude;
+    targetPosition=currentPosition;
+}
+
+void zeroPosition()
+{
+    setCurrentPosition(0,0);
+}
+
+//coordinate conversion
+long degreestosteps(float degree,Axis axis)
+{
+    if (axis ==Axis::AZIMUTH)
+    {return degrees*AZ_STEPS_PER_DEGREE;}
+    if (axis ==Axis::ALTITUDE)
+    {return degrees *ALT_STEPS_PER_DEGREE;}
+}
+
+float stepsToDegrees(long steps,Axis axis)
+{
+    if (axis==Axis::AZIMUTH)
+    {return (float)steps/AZ_STEPS_PER_DEGREE;}
+    if (axis==Axis::ALTITUDE)
+    {return (float)steps/ALT_STEPS_PER_DEGREE;}
 }
