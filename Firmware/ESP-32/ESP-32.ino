@@ -1,4 +1,5 @@
 #include "Motion.h"
+#include "Config.h"
 void setup()
 {
     Serial.begin(115200);

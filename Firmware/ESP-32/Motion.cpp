@@ -142,7 +142,7 @@ void updateMotion()
     altMotor.run();
 
     currentPosition.azimuth=azMotor.currentPosition();
-    currentPosition.altitude=altMotor.currentposition();
+    currentPosition.altitude=altMotor.currentPosition();
 
     switch (motionState)
     {
@@ -172,7 +172,7 @@ Position getCurrentPosition()
     return currentPosition;
 }
 
-Position gatTargetPosition()
+Position getTargetPosition()
 {
     return targetPosition;
 }
@@ -192,18 +192,22 @@ void zeroPosition()
 }
 
 //coordinate conversion
-long degreestosteps(float degree,Axis axis)
+long azimuthDegreesToSteps(float degrees)
 {
-    if (axis ==Axis::AZIMUTH)
-    {return degrees*AZ_STEPS_PER_DEGREE;}
-    if (axis ==Axis::ALTITUDE)
-    {return degrees *ALT_STEPS_PER_DEGREE;}
+    return (long)(degrees*AZ_STEPS_PER_DEGREE);
 }
 
-float stepsToDegrees(long steps,Axis axis)
+long altitudeDegreesToSteps(float degrees)
 {
-    if (axis==Axis::AZIMUTH)
-    {return (float)steps/AZ_STEPS_PER_DEGREE;}
-    if (axis==Axis::ALTITUDE)
-    {return (float)steps/ALT_STEPS_PER_DEGREE;}
+    return (long) (degrees*ALT_STEPS_PER_DEGREE);
+}
+
+float azimuthStepsToDegrees(long steps)
+{
+    return (float)(steps/AZ_STEPS_PER_DEGREE);
+}
+
+float altitudeStepsToDegrees(long steps)
+{
+    return (float) (steps/ALT_STEPS_PER_DEGREE);
 }

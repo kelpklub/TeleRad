@@ -22,6 +22,15 @@ enum class MotionState
     ERROR
 };
 
+//safety state
+enum class SafetyState
+{
+    NORMAL,
+    LIMIT_TRIGGERED,
+    SOFT_LIMIT,
+    EMERGENCY_STOP
+};
+
 //errors 
 enum class ErrorCode
 {
