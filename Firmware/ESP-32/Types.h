@@ -31,6 +31,20 @@ enum class SafetyState
     EMERGENCY_STOP
 };
 
+//homing 
+enum class HomingState
+{
+    IDLE,
+    AZ_FAST,
+    AZ_BACKOFF,
+    AZ_SLOW,
+    ALT_FAST,
+    ALT_BACKOFF,
+    ALT_SLOW,
+    COMPLETE,
+    ERROR
+};
+
 //errors 
 enum class ErrorCode
 {

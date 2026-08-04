@@ -6,6 +6,7 @@
 //state
 static SafetyState safetyState =SafetyState::NORMAL;
 static bool emergencyStopped=false;
+static bool limitSwitchesEnabledFlag=ENABLE_LIMIT_SWITCHES;
 
 //init
 void initSaftey()
@@ -24,7 +25,7 @@ void updateSaftey()
     {
         return;
     }
-    if (ENABLE_LIMIT_SWITCHES && limitsTriggered())
+    if (limitsTriggered())
     {
         stopMotion();
         safetyState =SafetyState::LIMIT_TRIGGERED;
@@ -51,9 +52,19 @@ bool isEmergencyStopped()
 }
 
 //limit switches
- bool limitsTriggered()
+void setLimitSwitchesEnabled(bool enabled)
+{
+    limitSwitchesEnabledFlag=enabled;
+}
+
+bool limitSwitchesEnabled()
+{
+    return limitSwitchesEnabledFlag;
+}
+
+bool limitsTriggered()
  {
-    if(!ENABLE_LIMIT_SWITCHES)
+    if(!limitSwitchesEnabledFlag)
     {
         return false;
     }
