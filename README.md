@@ -1,5 +1,5 @@
 # TeleRad-A radio telescope  
-### ![ESP32](https://img.shields.io/badge/ESP32-Compatible-red) ![RTL-SDR](https://img.shields.io/badge/RTL--SDR-Supported-blueviolet) ![Status](https://img.shields.io/badge/status-In%20Development-orange)  ![Last Commit](https://img.shields.io/github/last-commit/kelpklub/TeleRad)
+### ![Radio Astronomy](https://img.shields.io/badge/Radio-Astronomy-black) ![ESP32](https://img.shields.io/badge/ESP32-Compatible-red) ![RTL-SDR](https://img.shields.io/badge/RTL--SDR-Supported-blueviolet)  ![Status](https://img.shields.io/badge/status-In%20Development-orange)  ![Last Commit](https://img.shields.io/github/last-commit/kelpklub/TeleRad)
 NOTE: This project is currently in its design phase. No physical prototype has been made yet.  
 A radio telescope mounted on an two axis alt-azimuth motorized mount for observing radio phenomenon.  
 # Overview 
