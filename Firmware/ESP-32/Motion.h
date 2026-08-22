@@ -16,6 +16,8 @@ void moveTo(long azimuthSteps,long altitudeSteps);
 void moveRelative(long azimuthOffset,long altitudeOffset);
 void park();
 void stopMotion();
+void stopAzimuth();
+void stopAltitude();
 
 //driveer control 
 void enableDrivers();
@@ -24,6 +26,7 @@ bool driversEnabled();
 
 //motionstate
 bool isBusy();
+void setMotionState(MotionState state);
 MotionState getMotionState();
 
 //position 

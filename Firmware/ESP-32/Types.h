@@ -38,9 +38,12 @@ enum class HomingState
     AZ_FAST,
     AZ_BACKOFF,
     AZ_SLOW,
+    AZ_ZERO,
     ALT_FAST,
     ALT_BACKOFF,
     ALT_SLOW,
+    ALT_ZERO,
+    MOVE_HOME_OFFSET,
     COMPLETE,
     ERROR
 };

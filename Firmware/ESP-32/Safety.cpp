@@ -9,17 +9,19 @@ static bool emergencyStopped=false;
 static bool limitSwitchesEnabledFlag=ENABLE_LIMIT_SWITCHES;
 
 //init
-void initSaftey()
+void initSafety()
 {
-    pinMode(AZ_LIMIT_PIN,INPUT_PULLUP);
-    pinMode(ALT_LIMIT_PIN,INPUT_PULLUP);
+    pinMode(AZ_LIMIT_PIN, INPUT_PULLUP);
+    pinMode(ALT_LIMIT_PIN, INPUT_PULLUP);
 
-    safetyState =SafetyState::NORMAL;
-    emergencyStopped=false;
+    safetyState = SafetyState::NORMAL;
+    emergencyStopped = false;
+
+    limitSwitchesEnabledFlag = ENABLE_LIMIT_SWITCHES;
 }
 
 //update 
-void updateSaftey()
+void updateSafety()
 {
     if(emergencyStopped)
     {
@@ -38,6 +40,7 @@ void emergencyStop()
 {
     stopMotion();
     emergencyStopped=true;
+    setMotionState(MotionState::ERROR);
     safetyState=SafetyState::EMERGENCY_STOP;
 }
 

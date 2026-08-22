@@ -4,11 +4,12 @@
 #include <Arduino.h>
 #include "Types.h"
 
-//init
+// init
 void initHoming();
 void updateHoming();
 
 void startHoming();
+void stopHoming();
 
 bool isHoming();
 bool isHomed();

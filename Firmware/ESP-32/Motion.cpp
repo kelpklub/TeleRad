@@ -124,6 +124,16 @@ void stopMotion()
     motionState=MotionState::STOPPED;
 }
 
+void stopAzimuth()
+{
+    azMotor.stop();
+}
+
+void stopAltitude()
+{
+    altMotor.stop();
+}
+
 //motion state
 bool isBusy()
 {
@@ -164,6 +174,11 @@ void updateMotion()
         case MotionState::ERROR:
         break;
     }
+}
+
+void setMotionState(MotionState state)
+{
+    motionState = state;
 }
 
 //position
