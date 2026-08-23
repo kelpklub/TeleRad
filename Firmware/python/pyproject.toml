@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "telerad"
+version = "0.1.0"
+description = "TeleRad radio telescope control software"
+requires-python = ">=3.10"
+dependencies = [
+    "pyserial",
+    "pyrtlsdr",
+]
+
+[tool.setuptools]
+py-modules = [
+    "cli",
+    "config",
+    "esp32",
+    "mount",
+    "scanner",
+    "sdr",
+]
+
+[project.scripts]
+telerad = "cli:main"
