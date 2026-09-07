@@ -9,18 +9,24 @@ The Radio telescope will be made up of two systems.
 - Radio reciever  
   (An parabolic satallite ~75cm in diameter dish will will feed signal into a Low Noise Amplifier which goes through a Software Defined Radio dongle into a computer where it will be processed and converten into a 2d image map)  
 # Planned components
-- Mount  
-  1.Esp32
-  2.Stepper motor 2x(NEMA17)  
-  3.Stepper motor driver board 2x(DRV8825)  
-  4.Limiting Switch 2x  
-  5.BreadBoard and wires for easy wiring 
-- Radio reciever  
-  1.A Antenna  
-  2.A Low noise amplifier  
-  3.A Software defined radio dongle (RTL-SDR)  
-  4.A computer  
-  5.SMA connectors.
+|Name                        |Quantity|Per Unit Cost (INR)|Total Cost (INR)|Total Cost (USD)|Link                                                                                                     |Distributor|FIELD8|
+|----------------------------|--------|-------------------|----------------|----------------|---------------------------------------------------------------------------------------------------------|-----------|------|
+|Nema 17 Stepper Motor       |2       |1109               |2218            |23.35           |https://robu.in/product/42hs60-1684-nema17-7-2kg-cm-stepper-motor-round-type/                            |Amazon     |      |
+|DRV8825 Stepper motor driver|2       |96                 |192             |2.02            |https://robu.in/product/drv8825-stepper-motor-driver-aluminum-heat-sink-good-quality/                    |Amazon     |      |
+| Nema 17 Mount Straight     |2       |201                |402             |4.23            |https://robu.in/product/easymech-bracket-for-nema-17-stepper-motor-2/                                    |Amazon     |      |
+|DC-DC 12V-3.3V              |1       |49                 |49              |0.52            |https://robu.in/product/dc-dc-voltage-converter-multi-output-power-supply-module-12v-3-3v5v12v/          |Amazon     |      |
+|12V 5A powersupply          |1       |449                |449             |4.73            |https://robu.in/product/orange-ac-100-240v-to-dc-12v-5a-60w-power-adapter/                               |Amazon     |      |
+|RTL SDR V3                  |1       |7678               |7678            |80.82           |https://www.amazon.in/gp/product/B0BMKB3L47/ref=ox_sc_act_image_1?smid=A1YZ9MMK17G6RH&th=1               |Amazon     |      |
+|Low Noise Amplifier         |1       |205                |205             |2.16            |https://robu.in/product/0-1-2000mhz-rf-wideband-amplifier-gain-30db-low-noise-amplifier-lna-board-module/|           |      |
+|22 Gague jumper wire        |2       |149                |298             |3.14            |https://www.amazon.in/gp/product/B0B4WPX449/ref=ox_sc_act_title_2?smid=AJ6SIZC8YQDZX&psc=1               |Amazon     |      |
+|Perf Board                  |2       |118                |236             |2.48            |https://www.amazon.in/gp/product/B09ZB4W17X/ref=ox_sc_act_title_1?smid=A31PUIOPHJ56Y3&psc=1              |Amazon     |      |
+|ESP 32                      |1       |549                |549             |5.78            |https://www.amazon.in/gp/product/B0D6GDV77P/ref=ox_sc_act_title_4?smid=AJ6SIZC8YQDZX&psc=1               |Amazon     |      |
+|Coaxial Cable               |1       |294                |294             |3.09            |https://www.amazon.in/gp/product/B08254RHT3/ref=ox_sc_act_title_6?smid=A3G972E7L8N6MV&psc=1              |Amazon     |      |
+|6008 Ball Bearing           |2       |179                |358             |3.77            |https://www.amazon.in/gp/product/B08LPR978X/ref=ox_sc_act_title_7?smid=A1ATPDR7BUKQN6&psc=1              |           |      |
+
+
+							
+
 # Bill of Materials
 Heres everything you need for this project. [Bill Of Materials](BOM.csv)  
 # CAD  
@@ -42,8 +48,3 @@ The wiring is as follows:-
 **POWER SUPPLY** - An external powersupply of 12V is required for the two DRV8825 connected to VMOT of both driver.  
 # Coordinate Calibration  
 At Setup both motots will move in -x and -y direction till the it hits its respective limiting switch. When it does it will Mark that position as origin of that axis.After both axes have been calibrated it will rely on step counting for its current position.
-
-
-
-
-
