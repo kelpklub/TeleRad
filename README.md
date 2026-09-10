@@ -64,13 +64,31 @@ pip install -e .
 Verify Installation wit "telerad --help"  
 # Usage  
 ## Python cli  
-Check Mount Status - "telerad mount status"
-Check curremt Position - "telerad mount position"  
-Home Mount - "telerad mount home"  
-Move the mount - "telerad mount 90 45"  
-Move Mount relavtive to its current position - "telerad mount rel 10 -5"  
-Scan - "telerad scan start --from 20,30 --to 100,60 --step 1"  
+- Check Mount Status
+  ```bash
+  telerad mount status
+- Check curremt Position
+  ```bash
+  telerad mount position
+- Home Mount
+  ```bash
+  telerad mount home  
+- Move the mount
+  ```bash
+  telerad mount move 90 45  
+- Move Mount relavtive to its current position
+  ```bash
+  telerad mount rel 10 -5  
+- Scan
+  ```bash
+  telerad scan start --from 20,30 --to 100,60 --step 1 
 NOTE: for Scan the coordinates are opposites corners of a rectangle. the bottom-left and top-right.
+- Park the mount
+  ```bash
+  telerad mount park
+- Stop the mount
+  ```bash
+  telerad mount stop  
 
 
 
