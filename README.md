@@ -28,7 +28,7 @@ The wiring is as follows:-
 <img width="687" height="256" alt="microsteps-drv8825-snip" src="https://github.com/user-attachments/assets/cfb69f11-d256-4005-8756-5e025fe479bc" />  
 **DRV8825 BOARD PROTECTION** - A 100µF Capacitor And 100nF Capacitor are wired across VMOT and GND to stabalize VMOT and Supress high frequency Noise.  
 **POWER SUPPLY** - An external powersupply of 12V is required for the two DRV8825 connected to VMOT of both driver.  
-## Coordinate Calibration  
+## Homing  
 At Setup both motots will move in -x and -y direction till the it hits its respective limiting switch. When it does it will Mark that position as origin of that axis.After both axes have been calibrated it will rely on step counting for its current position.  
 # Software  
 TeleRad consists of two software components  
@@ -67,6 +67,10 @@ Verify Installation wit "telerad --help"
 Check Mount Status - "telerad mount status"
 Check curremt Position - "telerad mount position"  
 Home Mount - "telerad mount home"  
-Move the mount - "telerad mount --az 90 --alt 45"
+Move the mount - "telerad mount 90 45"  
+Move Mount relavtive to its current position - "telerad mount rel 10 -5"  
+Scan - "telerad scan start --from 20,30 --to 100,60 --step 1"  
+NOTE: for Scan the coordinates are opposites corners of a rectangle. the bottom-left and top-right.
+
 
 
