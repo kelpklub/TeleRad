@@ -49,9 +49,17 @@ It handles
 - Assemble the Mount.
 - uhhh
 ## Software  
+### ESP32  
+1.Install Arduino IDE 
+2.Install ESP32 Board Support  
+3.Install AccelStepper Library for Arduino IDE
+4.Open Firmware/ESP-32/ESP-32.ino in Arduino IDE  
+5.Connect ESP32 with a USB data cable.  
+6.Compile the .ino and uploAd it to the ESP.
+7.Test The serial connection by sending "PING" using Serial Moniter.
 ### Python 
 Clone the Repository and install the Python dependencies.
 cd Firmware/python  
 pip install -e .  
-Verify Installation wit telerad --help 
+Verify Installation wit "telerad --help"
 
