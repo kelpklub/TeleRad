@@ -88,7 +88,10 @@ NOTE: for Scan the coordinates are opposites corners of a rectangle. the bottom-
   telerad mount park
 - Stop the mount
   ```bash
-  telerad mount stop  
+  telerad mount stop
+# AI Declaration  
+AI helped with creation of the Firmware Of this project. 
+
 
 
 
