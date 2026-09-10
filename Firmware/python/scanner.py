@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+import csv
+from pathlib import Path
 
 from config import (
     AZ_MIN_DEG,
@@ -68,6 +70,7 @@ class Scanner:
 
         self.running = False
         self.results = []
+        self.progress_callback = None
 
     def start(self):
         if self.running:
@@ -83,6 +86,7 @@ class Scanner:
 
     def stop(self):
         self.running = False
+        self.mount.stop()
 
     def is_running(self):
         return self.running
@@ -92,7 +96,11 @@ class Scanner:
         self.results = []
 
         try:
-            for azimuth, altitude in self.positions():
+            positions = list(self.positions())
+            total_positions = len(positions)
+            completed_positions = 0
+
+            for azimuth, altitude in positions:
                 if not self.running:
                     break
 
@@ -113,6 +121,16 @@ class Scanner:
                     )
 
                     self.results.append(result)
+
+                completed_positions += 1
+
+                if self.progress_callback is not None:
+                    self.progress_callback(
+                        completed_positions,
+                        total_positions,
+                        azimuth,
+                        altitude,
+                    )
 
         finally:
             self.running = False
@@ -148,15 +166,64 @@ class Scanner:
     @staticmethod
     def _generate_range(start, end, step):
         positions = []
+        position = start
 
-        count = int((end - start) / step)
-
-        for index in range(count + 1):
-            position = start + (index * step)
-
-            if position > end:
-                break
-
+        while position <= end:
             positions.append(position)
+            position += step
+
+        # Always scan the requested rectangle boundary, even when the
+        # requested step does not divide the range evenly.
+        if not positions or positions[-1] != end:
+            positions.append(end)
 
         return positions
+
+    def set_progress_callback(self, callback):
+        """Set a callback: callback(completed, total, azimuth, altitude)."""
+        self.progress_callback = callback
+
+    def save_csv(self, filename):
+        """Save all collected measurements to a CSV file."""
+        if not self.results:
+            raise ValueError("No scan results to save")
+
+        path = Path(filename)
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+        with path.open("w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerow([
+                "azimuth",
+                "altitude",
+                "frequency",
+                "measurement",
+            ])
+
+            for result in self.results:
+                measurement = result.measurement
+
+                # SDRMeasurement used by TeleRad exposes power_dbfs,
+                # frequency, and sample_count.
+                value = getattr(measurement, "power_dbfs", measurement)
+                frequency = getattr(measurement, "frequency", "")
+                sample_count = getattr(measurement, "sample_count", "")
+                writer.writerow([
+                    result.azimuth,
+                    result.altitude,
+                    frequency,
+                    value,
+                    sample_count,
+                ])
+
+        return path
+
+
+def print_scan_progress(completed, total, azimuth, altitude):
+    """Print scan progress for a terminal UI."""
+    percent = (completed / total) * 100 if total else 100.0
+    print(
+        f"Scan: {completed}/{total} ({percent:5.1f}%) "
+        f"AZ={azimuth:.2f}° ALT={altitude:.2f}°",
+        flush=True,
+    )

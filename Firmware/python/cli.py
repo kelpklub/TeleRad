@@ -3,7 +3,8 @@ import sys
 
 from esp32 import ESP32
 from mount import Mount
-from scanner import Scanner
+from scanner import Scanner, print_scan_progress
+from measurement import SDR
 
 
 DEFAULT_PORT = "/dev/ttyUSB0"
@@ -155,7 +156,7 @@ def create_parser():
     parser.add_argument(
     "--dry-run",
     action="store_true",
-    help="Simulate hardware without connecting to the ESP32 or SDR"
+    help="Simulate hardware without connecting to the ESP32 or SDR (place before the command)"
 )
 
     # Mount
@@ -281,33 +282,34 @@ def create_parser():
     )
 
     scan_start_parser.add_argument(
-        "--az-start",
-        type=float,
-        required=True
+        "--from",
+        dest="start",
+        type=str,
+        required=True,
+        metavar="AZ,ALT",
+        help="Bottom-left scan coordinate"
     )
 
     scan_start_parser.add_argument(
-        "--az-end",
-        type=float,
-        required=True
-    )
-
-    scan_start_parser.add_argument(
-        "--alt-start",
-        type=float,
-        required=True
-    )
-
-    scan_start_parser.add_argument(
-        "--alt-end",
-        type=float,
-        required=True
+        "--to",
+        dest="end",
+        type=str,
+        required=True,
+        metavar="AZ,ALT",
+        help="Top-right scan coordinate"
     )
 
     scan_start_parser.add_argument(
         "--step",
         type=float,
-        required=True
+        required=True,
+        help="Angular spacing between scan positions in degrees"
+    )
+
+    scan_start_parser.add_argument(
+        "--output",
+        default="scan.csv",
+        help="CSV output file (default: scan.csv)"
     )
 
     return parser
@@ -325,15 +327,15 @@ def main():
         mount = Mount(esp32)
 
     try:
-        esp32.connect()
-
         if args.command == "mount":
+            esp32.connect()
             handle_mount(args, mount)
 
         elif args.command == "sdr":
             handle_sdr(args, dry_run=args.dry_run)
 
         elif args.command == "scan":
+            esp32.connect()
             handle_scan(args, mount, dry_run=args.dry_run)
 
     except KeyboardInterrupt:
@@ -346,6 +348,8 @@ def main():
 
     finally:
         mount.disconnect()
+        if not args.dry_run and args.command in ("mount", "scan"):
+            esp32.disconnect()
 
     return 0
 
@@ -418,7 +422,6 @@ def handle_sdr(args, dry_run=False):
     if dry_run:
         sdr = DryRunSDR()
     else:
-        from sdr import SDR
         sdr = SDR(
             frequency=1420.405e6
         )
@@ -456,11 +459,30 @@ def handle_sdr(args, dry_run=False):
         sdr.disconnect()
 
 
+def parse_coordinate(value, name):
+    """Parse an AZ,ALT command-line coordinate."""
+    parts = value.split(",")
+
+    if len(parts) != 2:
+        raise ValueError(
+            f"{name} must be in the form AZ,ALT (example: 20,30)"
+        )
+
+    try:
+        return float(parts[0]), float(parts[1])
+    except ValueError as error:
+        raise ValueError(
+            f"{name} must contain numeric AZ and ALT values"
+        ) from error
+
+
 def handle_scan(args, mount, dry_run=False):
+    start_az, start_alt = parse_coordinate(args.start, "--from")
+    end_az, end_alt = parse_coordinate(args.end, "--to")
+
     if dry_run:
         sdr = DryRunSDR()
     else:
-        from sdr import SDR
         sdr = SDR(
             frequency=1420.405e6
         )
@@ -468,24 +490,26 @@ def handle_scan(args, mount, dry_run=False):
     scanner = Scanner(
         mount=mount,
         sdr=sdr,
-        az_start=args.az_start,
-        az_end=args.az_end,
-        alt_start=args.alt_start,
-        alt_end=args.alt_end,
+        az_start=start_az,
+        az_end=end_az,
+        alt_start=start_alt,
+        alt_end=end_alt,
         step=args.step
     )
 
+    scanner.set_progress_callback(print_scan_progress)
+
+    print(
+        f"Starting scan: "
+        f"({start_az:.2f}°, {start_alt:.2f}°) → "
+        f"({end_az:.2f}°, {end_alt:.2f}°)"
+    )
+
     results = scanner.scan()
+    scanner.save_csv(args.output)
 
     print(f"Scan complete: {len(results)} measurements")
-
-    for result in results:
-        print(
-            f"AZ={result.azimuth:.2f}° "
-            f"ALT={result.altitude:.2f}° "
-            f"FREQ={result.measurement.frequency / 1e6:.6f} MHz "
-            f"POWER={result.measurement.power_dbfs:.2f} dBFS"
-        )
+    print(f"Saved: {args.output}")
 
 
 if __name__ == "__main__":
