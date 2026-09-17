@@ -7,6 +7,14 @@ I've always loved stargazing as a kid back in My rural Village . My love for the
 But is a few thousand lightbulbs going to stop me from observing the Night sky.  
 NO , IT WILL NOT.  
 TL;DR- I decided Viewing it in a diffrent ElectroMagnetic Spectrum would prove to be better as theres not as much radio pollution than light pollution. 
+# What I Learned  
+- Mechanical Design
+- Embedded System
+- Planning And Designing
+- Communication protocol
+- Optimizing Costs and Trade-offs
+- Will Probs learn More during the building phase.
+
 # Overview 
 The Radio telescope will be made up of two systems.  
 - Esp32 powered dual axis mount  
