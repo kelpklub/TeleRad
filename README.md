@@ -1,6 +1,6 @@
 # TeleRad-A radio telescope  
 ### ![Radio Astronomy](https://img.shields.io/badge/Radio-Astronomy-black) ![ESP32](https://img.shields.io/badge/ESP32-Compatible-red) ![RTL-SDR](https://img.shields.io/badge/RTL--SDR-Supported-blueviolet)  ![Status](https://img.shields.io/badge/status-In%20Development-orange)  
-NOTE: This project is currently in its design phase. No physical prototype has been made yet.  
+NOTE: This project has been built and is undergoing testing.  
 A radio telescope mounted on an two axis alt-azimuth motorized mount for observing radio phenomenon.  
 # What I Learned  
 - Mechanical Design
